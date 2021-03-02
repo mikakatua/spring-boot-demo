@@ -6,7 +6,8 @@ resources:
 - repo: self
 
 variables:
-  dockerRegistryServiceConnection: '{{ containerRegistryConnection.Id }}'
+#  dockerRegistryServiceConnection: '{{ containerRegistryConnection.Id }}'
+  dockerRegistryServiceConnection: 'Local Registry'
   imageRepository: '{{#toAlphaNumericString imageRepository 50}}{{/toAlphaNumericString}}'
 #  imageRepository: '$(Build.Repository.Name)'
   containerRegistry: '{{ containerRegistryConnection.Authorization.Parameters.loginServer }}'
