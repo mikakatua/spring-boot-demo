@@ -8,8 +8,8 @@ resources:
 variables:
 #  dockerRegistryServiceConnection: '{{ containerRegistryConnection.Id }}'
   dockerRegistryServiceConnection: 'Local Registry'
-  imageRepository: '{{#toAlphaNumericString imageRepository 50}}{{/toAlphaNumericString}}'
-#  imageRepository: '$(Build.Repository.Name)'
+#  imageRepository: '{{#toAlphaNumericString imageRepository 50}}{{/toAlphaNumericString}}'
+  imageRepository: '$(Build.Repository.Name)'
   containerRegistry: '{{ containerRegistryConnection.Authorization.Parameters.loginServer }}'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
