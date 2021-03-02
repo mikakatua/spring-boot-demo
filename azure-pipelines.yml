@@ -2,9 +2,6 @@
 trigger:
 - master
 
-resources:
-- repo: self
-
 variables:
   System.Debug: true
 #  dockerRegistryServiceConnection: '{{ containerRegistryConnection.Id }}'
