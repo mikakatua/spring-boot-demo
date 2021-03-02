@@ -24,6 +24,7 @@ docker run -d --name dockeragent \
   -v //var/run/docker.sock:/var/run/docker.sock \
   -e http_proxy=http://172.17.0.1:3128 \
   -e https_proxy=http://172.17.0.1:3128 \
+  -e NO_PROXY="localhost, 127.0.0.*, 10.*, 192.168.*, 172.17.*, *.docker.internal, *.intranet, *.ing.net, *.local" \
   -e AZP_URL="https://dev.azure.com/<ORGANIZATION>" \
   -e AZP_TOKEN="<PERSONAL-ACCESS-TOKEN>" \
   -e AZP_AGENT_NAME=DockerAgent \
