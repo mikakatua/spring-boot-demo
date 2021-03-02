@@ -5,7 +5,7 @@ Follow these instructions to run your Azure Pipelines agent in Docker
 In Azure DevOps go to your "User settings" and create a Personal Access Token to allow the agent access your account.
 
 ## Create a new Agent pool
-This step is optional. In your "Project Settings" add a new Agent pool of type "Self-hosted" and name "Local Agent".
+This step is not mandatory but it is a good practice to keep your agent in a separate pool. In your "Project Settings" add a new Agent pool of type "Self-hosted" and name "Local Agent".
 
 ## Build the agent image
 Run a command like this to create the container image. Change proxy settings to suit your environment.

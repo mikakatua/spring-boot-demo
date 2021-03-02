@@ -48,3 +48,17 @@ IMPORTANT: As the docker registry uses a self-signed certificate, you must add t
 For detailed instructions on how to deploy a registry, see [Deploy a registry server](https://docs.docker.com/registry/deploying/)
 
 ### Service connections
+In you project settings, create a new service connection for the Docker registry with the following configuration:
+* Registry type: **Others**
+* Docker Registry: **https://172.17.0.1:5000/v2**
+* Docker ID: **testuser**
+* Docker Password: **testpassword**
+* Service connection name: **Local Registry**
+
+Add also a service connection for Kubernetes with the below configuration:
+* Authentication method: **KubeConfig**
+* KubeConfig: Copy&Paste the contents of the config file (~/.kube/config)
+* Check "Accept untrusted certificates"
+* Service connection name: **Local Kubernetes**
+* Click "Save without verification"
+
