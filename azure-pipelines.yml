@@ -61,11 +61,11 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              buildType: 'current'
-              artifactName: 'manifests'
-              targetPath: '$(Pipeline.Workspace)/manifests'
+#          - task: DownloadPipelineArtifact@2
+#            inputs:
+#              buildType: 'current'
+#              artifactName: 'manifests'
+#              targetPath: '$(Pipeline.Workspace)/manifests'
 
           - task: Kubernetes@1
             displayName: 'Create the demo namespace'
@@ -88,7 +88,7 @@ stages:
               kubernetesServiceConnection: 'Local Kubernetes'
               namespace: '$(k8sNamespace)'
               manifests: |
-                $(Pipeline.Workspace)/manifests
+                $(Pipeline.Workspace)/manifests/*.yml
 #                $(Pipeline.Workspace)/manifests/deployment.yml
 #                $(Pipeline.Workspace)/manifests/service.yml
               containers: |
