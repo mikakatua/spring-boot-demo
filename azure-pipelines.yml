@@ -36,6 +36,10 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: replacetokens@3
+      inputs:
+        rootDirectory: '$(Pipeline.Workspace)/manifests/'
+        targetFiles: '**/*.yml'
     - task: PublishPipelineArtifact@1
       inputs:
         artifactName: 'manifests'
@@ -50,10 +54,6 @@ stages:
     pool:
       name: Local Agent
     steps:
-    - task: replacetokens@3
-      inputs:
-        rootDirectory: '$(Pipeline.Workspace)/manifests/'
-        targetFiles: '**/*.yml'
     - task: Kubernetes@1
       displayName: 'Create the demo namespace'
       inputs:
