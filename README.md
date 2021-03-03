@@ -29,6 +29,14 @@ This demo implements an hybrid solution using Cloud and On-premises services. Th
 | Docker registry | Local installation | Azure Container Registry |
 | Kubernetes | Local installation | Azure Kubernets Service |
 
+![architecture-demo.png](Architecture components)
+
+### Preparation
+Create a new project in your Azure DevOps organization, you can call it 'demo'.
+- In the "Project settings", enable the services Repos, Pipelines and Artifacts.
+- In the "Repos"menu, import this git repository.
+- In de "Pipelines" menu, add a new Environment called 'demo' with no resources.
+
 ### Azure Pipelines agent
 To be able to run pipeline jobs in our local machine we will run a self-hosted agent. The agent is deployed in a container, following the instructions in the [dockeragent](dockeragent) folder.
 
@@ -61,4 +69,6 @@ Add also a service connection for Kubernetes with the below configuration:
 * Check "Accept untrusted certificates"
 * Service connection name: **Local Kubernetes**
 * Click "Save without verification"
+
+To learn more, there is a good article in the Azure DevOps documentation: [Build and deploy to Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/kubernetes/aks-template?view=azure-devops)
 
