@@ -4,11 +4,9 @@ trigger:
 
 variables:
   System.Debug: true
-#  dockerRegistryServiceConnection: '{{ containerRegistryConnection.Id }}'
   dockerRegistryServiceConnection: 'Local Registry'
-#  imageRepository: '{{#toAlphaNumericString imageRepository 50}}{{/toAlphaNumericString}}'
-  imageRepository: '$(Build.Repository.Name)'
-#  containerRegistry: '{{ containerRegistryConnection.Authorization.Parameters.loginServer }}'
+  localRegistryAddress: '172.17.0.1:5000'
+  imageRepository: 'hello-world-app'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
 
