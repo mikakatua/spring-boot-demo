@@ -73,7 +73,8 @@ stages:
         action: deploy
         kubernetesServiceConnection: 'Local Kubernetes'
         namespace: '$(k8sNamespace)'
-        manifests: manifests/*.yml
+        manifests: |
+          manifests/deployment.yml
 #          $(Pipeline.Workspace)/manifests/deployment.yml
 #          $(Pipeline.Workspace)/manifests/service.yml
         containers: |
