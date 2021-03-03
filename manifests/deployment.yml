@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: #{localRegistryAddress}#/#{imageRepository}#:#{tag}#
+        image: #{containerRegistry}#/#{imageRepository}#:#{tag}#
         ports:
         - containerPort: 8080 
