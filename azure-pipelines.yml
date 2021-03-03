@@ -50,12 +50,20 @@ stages:
     pool:
       name: Local Agent
     steps:
-    - task: Bash@3
+    - task: replacetokens@3
       inputs:
-        targetType: 'inline'
-        script: |
-          # Write your commands here
-          echo 'Hello world'
+        rootDirectory: '$(Pipeline.Workspace)/manifests/'
+        targetFiles: '**/*.yml'
+    - task: Kubernetes@1
+      displayName: 'Create the demo namespace'
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'Local Kubernetes'
+        command: 'apply'
+        useConfigurationFile: true
+        configurationType: 'inline'
+        inline: '{ "kind": "Namespace", "apiVersion": "v1", "metadata": { "name": "$(k8sNamespace)" }}'
+
 #    - task: Kubernetes@1
 #      displayName: 'Create the demo namespace'
 #      inputs:
