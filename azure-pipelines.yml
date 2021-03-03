@@ -27,6 +27,7 @@ stages:
         script: |
           MAVEN_OPTS="-DproxyHost=172.17.0.1 -DproxyPort=3128" ./mvnw package
           mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -36,10 +37,12 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
     - task: replacetokens@3
       inputs:
         rootDirectory: 'manifests'
         targetFiles: '**/*.yml'
+
     - task: PublishPipelineArtifact@1
       inputs:
         artifactName: 'manifests'
@@ -49,37 +52,41 @@ stages:
   displayName: Deploy stage
   dependsOn: Build
   jobs:
-  - job: Deploy
-    displayName: Deploy
+  - deployment: Deploy
+    displayName: Deploy job
     pool:
       name: Local Agent
-    steps:
-    - task: Kubernetes@1
-      displayName: 'Create the demo namespace'
-      inputs:
-        connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: 'Local Kubernetes'
-        command: 'apply'
-        useConfigurationFile: true
-        configurationType: 'inline'
-        inline: |
-          kind: Namespace
-          apiVersion: v1
-          metadata:
-            name: "$(k8sNamespace)"
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        buildType: 'current'
-        artifactName: 'manifests'
-        targetPath: '$(Pipeline.Workspace)/manifests'
-    - task: KubernetesManifest@0
-      displayName: Deploy to Kubernetes cluster
-      inputs:
-        action: deploy
-        kubernetesServiceConnection: 'Local Kubernetes'
-        namespace: '$(k8sNamespace)'
-        manifests: |
-          $(Pipeline.Workspace)/manifests/deployment.yml
-          $(Pipeline.Workspace)/manifests/service.yml
-        containers: |
-          $(containerRegistry)/$(imageRepository):$(tag)
+    environment: 'demo'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+# This task is automatically done in a deployment job
+#          - task: DownloadPipelineArtifact@2
+#            inputs:
+#              buildType: 'current'
+#              artifactName: 'manifests'
+#              targetPath: '$(Pipeline.Workspace)/manifests'
+
+          - task: Kubernetes@1
+            displayName: 'Create the demo namespace'
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'Local Kubernetes'
+              command: 'apply'
+              useConfigurationFile: true
+              configurationType: 'inline'
+              inline: |
+                kind: Namespace
+                apiVersion: v1
+                metadata:
+                  name: "$(k8sNamespace)"
+
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              kubernetesServiceConnection: 'Local Kubernetes'
+              namespace: '$(k8sNamespace)'
+              manifests: |
+                $(Pipeline.Workspace)/manifests/*.yml
