@@ -29,7 +29,7 @@ This demo implements an hybrid solution using Cloud and On-premises services. Th
 | Docker registry | Local installation | Azure Container Registry |
 | Kubernetes | Local installation | Azure Kubernets Service |
 
-![architecture-demo.png](Architecture components)
+![Architecture components](architecture-demo.png)
 
 ### Preparation
 Create a new project in your Azure DevOps organization, you can call it 'demo'.
