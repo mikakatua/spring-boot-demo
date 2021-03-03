@@ -90,5 +90,3 @@ stages:
               namespace: '$(k8sNamespace)'
               manifests: |
                 $(Pipeline.Workspace)/manifests/*.yml
-#              containers: |
-#                $(containerRegistry)/$(imageRepository):$(tag)

@@ -5,6 +5,8 @@ metadata:
   labels:
     app: hello-world
     version: "#{tag}#"
+  annotations:
+    kubernetes.io/change-cause: "Deploy version #{tag}#"
 spec:
   replicas: 1
   selector:
