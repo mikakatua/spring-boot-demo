@@ -38,13 +38,8 @@ stages:
           $(tag)
     - task: replacetokens@3
       inputs:
-#        rootDirectory: '$(Pipeline.Workspace)/manifests/'
         rootDirectory: 'manifests'
         targetFiles: '**/*.yml'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'grep image manifests/deployment.yml'
     - task: PublishPipelineArtifact@1
       inputs:
         artifactName: 'manifests'
@@ -68,24 +63,14 @@ stages:
         useConfigurationFile: true
         configurationType: 'inline'
         inline: '{ "kind": "Namespace", "apiVersion": "v1", "metadata": { "name": "$(k8sNamespace)" }}'
-
-#    - task: Kubernetes@1
-#      displayName: 'Create the demo namespace'
-#      inputs:
-#        connectionType: 'Kubernetes Service Connection'
-#        kubernetesServiceEndpoint: 'Local Kubernetes'
-#        command: 'apply'
-#        useConfigurationFile: true
-#        configurationType: 'inline'
-#        inline: '{ "kind": "Namespace", "apiVersion": "v1", "metadata": { "name": "$(k8sNamespace)" }}'
-#    - task: KubernetesManifest@0
-#    displayName: Deploy to Kubernetes cluster
-#    inputs:
-#      action: deploy
-#      kubernetesServiceConnection: 'Local Kubernetes'
-#      namespace: '$(k8sNamespace)'
-#      manifests: |
-#        $(Pipeline.Workspace)/manifests/deployment.yml
-#        $(Pipeline.Workspace)/manifests/service.yml
-#      containers: |
-#        $(containerRegistry)/$(imageRepository):$(tag)
+    - task: KubernetesManifest@0
+      displayName: Deploy to Kubernetes cluster
+      inputs:
+        action: deploy
+        kubernetesServiceConnection: 'Local Kubernetes'
+        namespace: '$(k8sNamespace)'
+        manifests: |
+          $(Pipeline.Workspace)/manifests/deployment.yml
+          $(Pipeline.Workspace)/manifests/service.yml
+        containers: |
+          $(containerRegistry)/$(imageRepository):$(tag)
