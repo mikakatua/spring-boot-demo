@@ -38,7 +38,8 @@ stages:
           $(tag)
     - task: replacetokens@3
       inputs:
-        rootDirectory: '$(Pipeline.Workspace)/manifests/'
+#        rootDirectory: '$(Pipeline.Workspace)/manifests/'
+        rootDirectory: 'manifests'
         targetFiles: '**/*.yml'
     - task: PublishPipelineArtifact@1
       inputs:
