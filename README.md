@@ -70,5 +70,8 @@ Add also a service connection for Kubernetes with the below configuration:
 * Service connection name: **Local Kubernetes**
 * Click "Save without verification"
 
+## Multi-stage pipeline
+Go to Pipelines and new pipeline selecting the Azure Repos that you just imported before. The repository contains the file `azure-pipelines.yml` with the code to build and deploy the demo application in your Kubernetes cluster.
+
 To learn more, there is a good article in the Azure DevOps documentation: [Build and deploy to Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/kubernetes/aks-template?view=azure-devops)
 
